@@ -1,0 +1,21 @@
+# Setup the environment:
+language: ruby
+sudo: false
+dist: trusty
+cache: bundler
+
+rvm:
+  - 2.1
+  - 2.2
+  - 2.3
+  - 2.4
+  - 2.5
+  - 2.6
+  - jruby-head
+  - ruby-head
+
+# Setup the compilers:
+matrix:
+  allow_failures:
+    - rvm: ruby-head
+    - rvm: jruby-head
