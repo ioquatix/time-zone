@@ -2,9 +2,9 @@
 
 A very simple time-zone library which works by manipulating the `TZ` environment variable.
 
-[![Build Status](https://secure.travis-ci.org/kurocha/time-zone.svg)](http://travis-ci.org/kurocha/time-zone)
-[![Code Climate](https://codeclimate.com/github/kurocha/time-zone.svg)](https://codeclimate.com/github/kurocha/time-zone)
-[![Coverage Status](https://coveralls.io/repos/kurocha/time-zone/badge.svg)](https://coveralls.io/r/kurocha/time-zone)
+[![Build Status](https://secure.travis-ci.org/ioquatix/time-zone.svg)](http://travis-ci.org/ioquatix/time-zone)
+[![Code Climate](https://codeclimate.com/github/ioquatix/time-zone.svg)](https://codeclimate.com/github/ioquatix/time-zone)
+[![Coverage Status](https://coveralls.io/repos/ioquatix/time-zone/badge.svg)](https://coveralls.io/r/ioquatix/time-zone)
 
 ## Motivation
 
@@ -22,11 +22,11 @@ gem 'time-zone'
 
 And then execute:
 
-    $ bundle
+	$ bundle
 
 Or install it yourself as:
 
-    $ gem install time-zone
+	$ gem install time-zone
 
 ## Usage
 
