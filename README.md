@@ -10,6 +10,8 @@ A very simple time-zone library which works by manipulating the `TZ` environment
 
 `tzinfo` has an antiquated view of `Time`. It returns local time values with a UTC time zone which is pretty much wrong.
 
+[![A brief history of Time.new](https://img.youtube.com/vi/UjdtH5gO_DQ/0.jpg)](https://www.youtube.com/watch?v=UjdtH5gO_DQ)
+
 ## Installation
 
 Add this line to your application's Gemfile:
