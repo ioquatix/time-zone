@@ -30,7 +30,7 @@ Or install it yourself as:
 
 ## Usage
 
-There are two basic use cases:
+There are two basic use cases, getting the current time, and converting times.
 
 ### Current Time
 
@@ -45,6 +45,23 @@ Time::Zone.now("Pacific/Auckland")
 Time::Zone.convert(Time.now.utc, "Pacific/Auckland")
 => 2018-05-25 14:14:22 +1200
 ```
+
+### Multiple Operations
+
+```ruby
+Time::Zone.with("US/Pacific") do
+	# Be aware that in some cases Time values are lazy initialized, so you need to use #localtime to force them to evaluate and use the current `TZ`.
+	time = Time.new.localtime
+	puts time.inspect
+	# => 2018-05-24 20:32:29 -0700
+end
+```
+
+### Caveats
+
+This implementation manipulates the per-process `TZ` environment variable. This means that if you don't put locking around all your usage of `localtime`, you may end up with strange results (i.e. in a timezone other than the system specified `TZ`). In the future, this requirement may go away.
+
+This library is unlikely to work on Windows because it doesn't correctly handle changes to `TZ`.
 
 ## Contributing
 

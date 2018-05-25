@@ -18,8 +18,28 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 
+require 'thread'
+
 class Time
 	module Zone
-		VERSION = "0.2.0"
+		LOCK = Mutex.new
+		
+		def self.with(zone)
+			LOCK.synchronize do
+				original_zone = ENV['TZ']
+				
+				begin
+					ENV['TZ'] = zone
+					
+					yield
+				ensure
+					if original_zone
+						ENV['TZ'] = original_zone
+					else
+						ENV.delete('TZ')
+					end
+				end
+			end
+		end
 	end
 end

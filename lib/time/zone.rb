@@ -20,39 +20,20 @@
 
 require_relative 'zone/version'
 
-require 'thread'
+require_relative 'zone/locking'
 
 class Time
 	module Zone
-		@tz = Mutex.new
-		
-		def self.with(zone)
-			@tz.synchronize do
-				original_zone = ENV['TZ']
-				
-				begin
-					ENV['TZ'] = zone
-					
-					yield
-				ensure
-					if original_zone
-						ENV['TZ'] = original_zone
-					else
-						ENV.delete('TZ')
-					end
-				end
-			end
-		end
-		
 		def self.now(zone)
 			with(zone) do
-				return Time.now
+				# Time instances are lazy initialized, so we need to force it to pick up the current TZ by invoking #localtime
+				return Time.new.localtime
 			end
 		end
 		
 		def self.convert(time, zone)
 			with(zone) do
-				return Time.now
+				return time.localtime
 			end
 		end
 	end
