@@ -2,6 +2,10 @@
 
 A very simple time-zone library which works by manipulating the `TZ` environment variable.
 
+[![Build Status](https://secure.travis-ci.org/kurocha/time-zone.svg)](http://travis-ci.org/kurocha/time-zone)
+[![Code Climate](https://codeclimate.com/github/kurocha/time-zone.svg)](https://codeclimate.com/github/kurocha/time-zone)
+[![Coverage Status](https://coveralls.io/repos/kurocha/time-zone/badge.svg)](https://coveralls.io/r/kurocha/time-zone)
+
 ## Motivation
 
 `tzinfo` has an antiquated view of `Time`. It returns local time values with a UTC time zone which is pretty much wrong.
