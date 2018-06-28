@@ -12,6 +12,13 @@ RSpec.describe Time::Zone do
 	end
 	
 	it "can convert times" do
-		expect(Time::Zone.convert(Time.now.utc, timezone)).to be_within(5).of(now)
+		expect(Time::Zone.convert(Time.now.utc, timezone)).to be_within(1).of(now)
+	end
+	
+	# String doesn't include timezone information.
+	let(:string) {now.strftime("%c")}
+	
+	it "can parse times" do
+		expect(Time::Zone.parse(string, timezone)).to be_within(1).of(now)
 	end
 end

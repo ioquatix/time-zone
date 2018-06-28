@@ -22,6 +22,8 @@ require_relative 'zone/version'
 
 require_relative 'zone/locking'
 
+require 'time'
+
 class Time
 	module Zone
 		def self.now(zone)
@@ -34,6 +36,12 @@ class Time
 		def self.convert(time, zone)
 			with(zone) do
 				return time.localtime
+			end
+		end
+		
+		def self.parse(string, zone)
+			with(zone) do
+				return Time.parse(string).localtime
 			end
 		end
 	end
