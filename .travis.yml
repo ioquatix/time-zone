@@ -1,8 +1,11 @@
 # Setup the environment:
 language: ruby
-sudo: false
-dist: trusty
+dist: xenial
 cache: bundler
+
+before_script:
+  - gem update --system
+  - gem install bundler
 
 rvm:
   - 2.1
