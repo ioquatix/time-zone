@@ -30,7 +30,7 @@ class Time
 			end
 			
 			def self.dump(time)
-				time.to_s
+				time.strftime
 			end
 			
 			def self.now(zone)
@@ -121,7 +121,7 @@ class Time
 				to_time <=> other.to_time
 			end
 			
-			DEFAULT_FORMAT = '%Y-%m-%d %H:%m:%S %Z'.freeze
+			DEFAULT_FORMAT = '%Y-%m-%d %H:%M:%S %Z'.freeze
 			
 			def to_s(format = relative_format)
 				to_time.strftime(format.gsub('%Z', @zone))
@@ -133,9 +133,9 @@ class Time
 			
 			def relative_format(now = Timestamp.now(@zone))
 				if self.year != now.year
-					"%B %-d, %-l:%M%P, %Y %Z"
+					"%-l:%M%P, %B %-d, %Y, %Z"
 				else
-					"%B %-d, %-l:%M%P %Z"
+					"%-l:%M%P, %B %-d, %Z"
 				end
 			end
 			

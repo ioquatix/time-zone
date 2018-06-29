@@ -48,7 +48,17 @@ RSpec.describe Time::Zone::Timestamp do
 		end
 	end
 	
-	it "can generate iso8601 representation" do
-		expect(now.iso8601).to be =~ /\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\+\d{2}:\d{2}/
+	context '#iso8601' do
+		it "generates valid string" do
+			expect(now.iso8601).to be =~ /\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\+\d{2}:\d{2}/
+		end
+	end
+	
+	context 'stftime' do
+		let(:birthday) {Time::Zone::Timestamp.parse("1:20:30pm, 2nd April, 1985 Pacific/Auckland")}
+		
+		it "generates valid string according to default format" do
+			expect(birthday.strftime).to be == "1985-04-02 13:20:30 Pacific/Auckland"
+		end
 	end
 end
