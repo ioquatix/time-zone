@@ -17,6 +17,10 @@ rvm:
   - jruby-head
   - ruby-head
 
+env:
+  - TZ=UTC
+  - TZ=Pacific/Auckland
+
 # Setup the compilers:
 matrix:
   allow_failures:
