@@ -38,7 +38,7 @@ class Time
 			end
 			
 			def self.from(time, zone)
-				self.new(time.year, time.month, time.day, time.hour, time.min, time.sec, zone)
+				self.new(time.year, time.month, time.day, time.hour, time.minute, time.second, zone)
 			end
 			
 			def self.parse(*args)
