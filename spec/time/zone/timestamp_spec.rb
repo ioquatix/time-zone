@@ -24,6 +24,8 @@ RSpec.describe Time::Zone::Timestamp do
 	let(:timezone) {"Pacific/Auckland"}
 	let(:now) {Time::Zone::Timestamp.now(timezone)}
 	
+	let(:birthday) {Time::Zone::Timestamp.parse("12:20:30pm, 2nd April, 1985 Pacific/Auckland")}
+	
 	context '.parse' do
 		it "can parse a string" do
 			timestamp = described_class.parse("2018-04-02 15:14:15 Z")
@@ -48,17 +50,31 @@ RSpec.describe Time::Zone::Timestamp do
 		end
 	end
 	
+	context '#-' do
+		it "can subtract a duration" do
+			time = birthday - 90
+			
+			expect(time.minute).to be == (birthday.minute - 1)
+			expect(time.second).to be == (birthday.second - 30)
+		end
+		
+		it "can subtract two timestamps" do
+			duration = now - birthday
+			
+			# I was older than 30 when I wrote this test :)
+			expect(duration).to be > (30*365*24*60*60)
+		end
+	end
+	
 	context '#iso8601' do
 		it "generates valid string" do
 			expect(now.iso8601).to be =~ /\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\+\d{2}:\d{2}/
 		end
 	end
 	
-	context 'stftime' do
-		let(:birthday) {Time::Zone::Timestamp.parse("1:20:30pm, 2nd April, 1985 Pacific/Auckland")}
-		
+	context '#stftime' do
 		it "generates valid string according to default format" do
-			expect(birthday.strftime).to be == "1985-04-02 13:20:30 Pacific/Auckland"
+			expect(birthday.strftime).to be == "1985-04-02 12:20:30 Pacific/Auckland"
 		end
 	end
 end

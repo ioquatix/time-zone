@@ -98,7 +98,12 @@ class Time
 			
 			# Return difference in seconds.
 			def - other
-				to_time - other.to_time
+				if other.is_a? Numeric
+					# We are subtracting a duration:
+					with_offset(0, -other)
+				else
+					to_time - other.to_time
+				end
 			end
 			
 			def to_time
