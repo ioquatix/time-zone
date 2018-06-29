@@ -139,8 +139,10 @@ class Time
 			def relative_format(now = Timestamp.now(@zone))
 				if self.year != now.year
 					"%-l:%M%P, %B %-d, %Y, %Z"
-				else
+				elsif self.month != now.month or self.day != now.day
 					"%-l:%M%P, %B %-d, %Z"
+				else
+					"%-l:%M%P, %Z"
 				end
 			end
 			
