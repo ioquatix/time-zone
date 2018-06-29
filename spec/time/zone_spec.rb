@@ -87,4 +87,14 @@ RSpec.describe Time::Zone do
 			expect(zone).to be == timezone
 		end
 	end
+	
+	context 'Time#-', if: Time::Zone.utc? do
+		# https://bugs.ruby-lang.org/issues/14879
+		it "needs to work around bug #14879" do
+			time, _ = Time::Zone.parse("5pm", timezone)
+			
+			expect(time.utc_offset).to_not be == 0
+			expect((time + 1).utc_offset).to be == 0
+		end
+	end
 end

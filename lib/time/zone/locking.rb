@@ -30,10 +30,16 @@ class Time
 			end
 		end
 		
-		def self.zone(zone)
+		def self.zone
 			LOCK.synchronize do
 				ENV['TZ']
 			end
+		end
+		
+		UTC = "UTC".freeze
+		
+		def self.utc?
+			zone == UTC
 		end
 		
 		def self.with(zone)
