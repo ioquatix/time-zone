@@ -25,6 +25,9 @@ require_relative 'zone/locking'
 require 'time'
 
 class Time
+	alias minute min
+	alias second sec
+	
 	module Zone
 		def self.now(zone)
 			with(zone) do
@@ -35,7 +38,7 @@ class Time
 		
 		def self.convert(time, zone)
 			with(zone) do
-				return time.localtime
+				return Time.new(time.year, time.month, time.day, time.hour, time.minute, time.second, time.utc_offset).localtime
 			end
 		end
 		
