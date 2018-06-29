@@ -64,6 +64,18 @@ RSpec.describe Time::Zone::Timestamp do
 			# I was older than 30 when I wrote this test :)
 			expect(duration).to be > (30*365*24*60*60)
 		end
+		
+		it "subtracts correctly" do
+			time = described_class.parse("2018-06-28 17:00:00 Pacific/Auckland") - 1
+			
+			expect(time.year).to be == 2018
+			expect(time.month).to be == 6
+			expect(time.day).to be == 28
+			
+			expect(time.hour).to be == 16
+			expect(time.minute).to be == 59
+			expect(time.second).to be == 59
+		end
 	end
 	
 	context '#iso8601' do

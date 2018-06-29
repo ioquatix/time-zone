@@ -77,7 +77,8 @@ class Time
 				end
 				
 				if seconds != 0
-					current = current.to_time + seconds
+					# https://bugs.ruby-lang.org/issues/14879
+					current = Time::Zone.convert(current.to_time + seconds, @zone)
 				end
 				
 				self.class.from(current, @zone)
