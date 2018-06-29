@@ -1,18 +1,45 @@
+# Copyright, 2018, by Samuel G. D. Williams. <http://www.codeotaku.com>
+# 
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+# 
+# The above copyright notice and this permission notice shall be included in
+# all copies or substantial portions of the Software.
+# 
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+# THE SOFTWARE.
 
 RSpec.describe Time::Zone do
 	let(:timezone) {"Pacific/Auckland"}
+	let(:utc_offset) {43200}
+	
 	let(:now) {Time::Zone.now(timezone)}
 	
-	it "should have correct utc offset" do
-		expect(now.utc_offset).to be >= 43200
+	context '.new' do
+		it "can compute specific time" do
+			expect(Time::Zone.new(now.year, now.month, now.day, now.hour, now.min, now.sec, timezone)).to be_within(1).of(now)
+		end
 	end
 	
-	it "can get current time" do
-		expect(now.utc).to be_within(5).of(Time.now.utc)
+	context '#utc_offset' do
+		it "should have correct utc offset" do
+			expect(now.utc_offset).to be >= utc_offset
+		end
 	end
 	
-	it "can convert times" do
-		expect(Time::Zone.convert(Time.now.utc, timezone)).to be_within(1).of(now)
+	context '#utc' do
+		it "can get current time" do
+			expect(now.utc).to be_within(1).of(Time.now.utc)
+		end
 	end
 	
 	context '.convert' do
@@ -48,10 +75,16 @@ RSpec.describe Time::Zone do
 			expect(local_time.utc_offset).to be >= utc_offset
 		end
 	end
-	# String doesn't include timezone information.
-	let(:string) {now.strftime("%c")}
 	
-	it "can parse times" do
-		expect(Time::Zone.parse(string, timezone)).to be_within(1).of(now)
+	context '.parse' do
+		# String doesn't include timezone information.
+		it "can parse string including timezone" do
+			time, zone = Time::Zone.parse(
+				now.strftime("%c #{timezone}")
+			)
+			
+			expect(time).to be_within(1).of(now)
+			expect(zone).to be == timezone
+		end
 	end
 end

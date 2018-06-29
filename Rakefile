@@ -8,6 +8,7 @@ task :default => :spec
 task :console do
 	require 'pry'
 	require_relative 'lib/time/zone'
+	require_relative 'lib/time/zone/timestamp'
 	
 	Pry.start
 end

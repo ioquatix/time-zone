@@ -18,40 +18,37 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 
-require 'thread'
+require 'time/zone/timestamp'
 
-class Time
-	module Zone
-		LOCK = Mutex.new
-		
-		def self.zone=(zone)
-			LOCK.synchronize do
-				ENV['TZ'] = zone
-			end
+RSpec.describe Time::Zone::Timestamp do
+	let(:timezone) {"Pacific/Auckland"}
+	let(:now) {Time::Zone::Timestamp.now(timezone)}
+	
+	context '.parse' do
+		it "can parse a string" do
+			timestamp = described_class.parse("2018-04-02 15:14:15 Z")
+			
+			expect(timestamp.year).to be == 2018
+			expect(timestamp.month).to be == 4
+			expect(timestamp.day).to be == 2
+			
+			expect(timestamp.hour).to be == 15
+			expect(timestamp.minute).to be == 14
+			expect(timestamp.second).to be == 15
+			
+			expect(timestamp.zone).to be == "Z"
 		end
 		
-		def self.zone(zone)
-			LOCK.synchronize do
-				ENV['TZ']
-			end
+		it "can parse a incomplete string" do
+			timestamp = described_class.parse("May 25, 6pm")
+			
+			expect(timestamp.month).to be == 5
+			expect(timestamp.day).to be == 25
+			expect(timestamp.hour).to be == 12+6
 		end
-		
-		def self.with(zone)
-			LOCK.synchronize do
-				original_zone = ENV['TZ']
-				
-				begin
-					ENV['TZ'] = zone
-					
-					yield
-				ensure
-					if original_zone
-						ENV['TZ'] = original_zone
-					else
-						ENV.delete('TZ')
-					end
-				end
-			end
-		end
+	end
+	
+	it "can generate iso8601 representation" do
+		expect(now.iso8601).to be =~ /\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\+\d{2}:\d{2}/
 	end
 end

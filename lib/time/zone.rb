@@ -29,6 +29,12 @@ class Time
 	alias second sec
 	
 	module Zone
+		def self.new(year, month, day, hour, minute, second, zone)
+			with(zone) do
+				return Time.new(year, month, day, hour, minute, second).localtime
+			end
+		end
+		
 		def self.now(zone)
 			with(zone) do
 				# Time instances are lazy initialized, so we need to force it to pick up the current TZ by invoking #localtime
@@ -42,9 +48,13 @@ class Time
 			end
 		end
 		
-		def self.parse(string, zone)
+		def self.parse(string, zone = "UTC", *args)
+			if string.sub!(/\s([a-zA-Z][\w]*(\/[\w]+)?)$/, "")
+				zone = $1
+			end
+			
 			with(zone) do
-				return Time.parse(string).localtime
+				return Time.parse(string, *args).localtime, zone
 			end
 		end
 	end
