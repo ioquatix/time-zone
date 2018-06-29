@@ -69,7 +69,11 @@ class Time
 				self.class.from(Time::Zone.convert(to_time, zone), zone)
 			end
 			
-			private def with_offset(months, seconds = 0)
+			# Generate a new time with the specified changes.
+			# @param months [Numeric] add this many months
+			# @param seconds [Numeric] add this many seconds
+			# @param zone [String] forcefully change the timezone without doing any conversion.
+			def with_offset(months = 0, seconds = 0, zone = @zone)
 				current = self
 				
 				if months != 0
@@ -81,7 +85,7 @@ class Time
 					current = Time::Zone.convert(current.to_time + seconds, @zone)
 				end
 				
-				self.class.from(current, @zone)
+				self.class.from(current, zone)
 			end
 			
 			# Add duration in various units.
