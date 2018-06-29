@@ -76,16 +76,6 @@ RSpec.describe Time::Zone::Timestamp do
 			expect(time.minute).to be == 59
 			expect(time.second).to be == 59
 		end
-		
-		if ENV['TZ'] == "UTC"
-			# https://bugs.ruby-lang.org/issues/14879
-			it "needs to work around bug #14879" do
-				time, _ = Time::Zone.parse("5pm", timezone)
-				
-				expect(time.utc_offset).to_not be == 0
-				expect((time + 1).utc_offset).to be == 0
-			end
-		end
 	end
 	
 	context '#iso8601' do
