@@ -88,7 +88,7 @@ RSpec.describe Time::Zone do
 		end
 	end
 	
-	context 'Time#-', if: Time::Zone.utc? do
+	context 'Time#+', if: Time::Zone.utc? do
 		# https://bugs.ruby-lang.org/issues/14879
 		it "needs to work around bug #14879" do
 			time, _ = Time::Zone.parse("5pm", timezone)
