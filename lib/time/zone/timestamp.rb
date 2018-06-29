@@ -45,7 +45,7 @@ class Time
 				self.from(*Zone.parse(*args))
 			end
 			
-			def initialize(year, month, day, hour, minute, second, zone)
+			def initialize(year, month, day, hour, minute, second, zone = "UTC")
 				@year = year
 				@month = month
 				@day = day
