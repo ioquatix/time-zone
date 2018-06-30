@@ -49,6 +49,8 @@ class Time
 		end
 		
 		def self.parse(string, zone = "UTC", *args)
+			string = string.dup
+			
 			if string.sub!(/\s([a-zA-Z][\w]*(\/[\w]+)?)$/, "")
 				zone = $1
 			end

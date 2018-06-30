@@ -86,6 +86,12 @@ RSpec.describe Time::Zone do
 			expect(time).to be_within(1).of(now)
 			expect(zone).to be == timezone
 		end
+		
+		it "doesn't modify input string" do
+			Time::Zone.parse(
+				"5pm Pacific/Auckland".freeze
+			)
+		end
 	end
 	
 	context 'Time#+', if: Time::Zone.utc? do
