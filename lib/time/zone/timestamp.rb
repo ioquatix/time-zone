@@ -25,6 +25,8 @@ require 'date'
 class Time
 	module Zone
 		class Timestamp
+			include Comparable
+			
 			def self.load(string)
 				self.parse(string)
 			end
